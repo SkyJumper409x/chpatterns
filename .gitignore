@@ -1,0 +1,7 @@
+# object files
+*.o
+*.so
+# build dir
+build
+# vscode
+.vscode

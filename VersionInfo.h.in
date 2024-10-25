@@ -1,0 +1,3 @@
+#pragma once
+#define CHPatterns_VERSION_MAJOR @CHPatterns_VERSION_MAJOR@
+#define CHPatterns_VERSION_MINOR @CHPatterns_VERSION_MINOR@
