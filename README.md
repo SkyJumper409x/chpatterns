@@ -5,11 +5,11 @@ Building:
 - cmake is required
 - I am using gcc (I think?) so if other cxx compilers complain that's probably why
 Steps:
-1. create `build` directory in the top folder (The same folder that contains CMakeLists.txt)
+1. create `build` directory in the top folder (The same folder that contains CMakeLists.txt):
 `mkdir build && cd build`
-2. run
+2. run: 
 `cmake ..`
-3. run
+3. run: 
 `cmake --build .`
 Repeat only step 3 (inside the `build` directory) for subsequent builds
 
