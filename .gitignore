@@ -3,6 +3,7 @@
 *.so
 # clang
 .cache/clangd
+./compile_commands.json
 # build dir
 build
 # vscode
