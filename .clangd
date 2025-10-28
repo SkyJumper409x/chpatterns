@@ -1,0 +1,8 @@
+CompileFlags:
+  Add: [
+    "-std=c++11",
+    "-I/usr/include/c++/15",       # adjust to your GCC version
+    "-I/usr/include/c++/15/x86_64-pc-linux-gnu",
+    "-I/usr/include",
+    "-I${PROJECT_SOURCE_DIR}"
+  ]

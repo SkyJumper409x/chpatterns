@@ -1,6 +1,8 @@
 # object files
 *.o
 *.so
+# clang
+.cache/clangd
 # build dir
 build
 # vscode

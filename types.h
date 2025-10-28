@@ -6,7 +6,10 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include <limits.h>
+#include <string>
 #include <list>
+#include <vector>
+#include <map>
 
 typedef uint8_t u8;       ///<   8-bit unsigned integer.
 typedef uint16_t u16;     ///<  16-bit unsigned integer.
@@ -34,3 +37,12 @@ typedef	unsigned int	uint;
 typedef	unsigned long	ulong;
 
 typedef std::string string;
+
+template <typename Tp, typename Allocator>
+using list = std::list<Tp, Allocator>;
+
+template <typename Tp, typename Alloc = std::allocator<Tp>>
+using vector = std::vector<Tp, Alloc>;
+
+template <typename Key, typename Tp, typename Compare = std::less<Key>, typename Alloc = std::allocator<std::pair<const Key, Tp>>>
+using map = std::map<Key, Tp , Compare, Alloc>;

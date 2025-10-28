@@ -1,7 +1,4 @@
-#include <string>
 #include <sstream>
-#include <vector>
-#include <map>
 #include <iterator>
 #include <iostream>
 #include <algorithm>
@@ -10,23 +7,35 @@
 #include "types.h"
 #include "LogFlags.hxx"
 
+string str(string s) {
+    return s;
+}
+string str(int n) {
+    return std::to_string(n);
+}
+string str(char c) {
+    string thing = "";
+    thing += c;
+    return thing;
+}
 /* https://stackoverflow.com/a/236803 */
 template <typename Out>
 void split(const std::string &s, char delim, Out result) {
     std::istringstream iss(s);
     std::string item;
     while (std::getline(iss, item, delim)) {
-        *result++ = item;
+        result = item;
     }
 }
 std::vector<std::string> split(const std::string &s, char delim) {
-    std::vector<std::string> elems;
+    std::vector<std::string> elems{};
     split(s, delim, std::back_inserter(elems));
     return elems;
 }
 
 
-std::vector<std::string> slice(const std::vector<std::string> arr, const int startInclusive, const int endExclusive) {
+
+vector<string> slice(const vector<string> arr, const int startInclusive, const int endExclusive) {
 
     if(CHPatterns_LOG_LEVEL >= CHPatternsLogLevelDebug) {
         std::cout << "-- begin slice debug logging --" << std::endl;
@@ -42,7 +51,7 @@ std::vector<std::string> slice(const std::vector<std::string> arr, const int sta
     int arrSize = arr.size();
     int actualEndExclusive = std::min(arrSize, endExclusive);
     int resultSize = actualEndExclusive - startInclusive;
-    std::vector<std::string> result;
+    vector<string> result;
     if(CHPatterns_LOG_LEVEL >= CHPatternsLogLevelDebug) {
         std::cout << "arr size: " << arrSize << std::endl;
         std::cout << "actualEndExclusive: " << actualEndExclusive << std::endl;
@@ -71,7 +80,7 @@ std::vector<std::string> slice(const std::vector<std::string> arr, const int sta
             std::cout << "iteration #" << j << ": " << std::endl;
             std::cout << "assigning result[" << j << "] value \"" << arr[i] << "\" at arr[" << i << "]" << std::endl;
         }
-        result[j] = arr[i];
+        result.push_back(arr[i]);
         if(CHPatterns_LOG_LEVEL >= CHPatternsLogLevelDebug) {
             std::cout << "assigned value to result[" << j << "]" << std::endl;
         }
@@ -84,11 +93,11 @@ std::vector<std::string> slice(const std::vector<std::string> arr, const int sta
     return result;
 }
 
-std::string substring(const std::string s, const int start, const int end) {
+string substring(const string s, const int start, const int end) {
     if(CHPatterns_LOG_LEVEL >= CHPatternsLogLevelDebug) {
         std::cout << "substringing from " << start << " to " << end << " for string \"" << s << "\"" << std::endl;
     }
-    std::string result = "";
+    string result = "";
     if(CHPatterns_LOG_LEVEL >= CHPatternsLogLevelDebug) {
         std::cout << "created result" << std::endl;
     }
@@ -114,7 +123,7 @@ std::string substring(const std::string s, const int start, const int end) {
         x++;
         std::cout << "x++'d" << std::endl;
     }
-    const std::string* pointyS = &s;
+    const string* pointyS = &s;
     if(CHPatterns_LOG_LEVEL >= CHPatternsLogLevelDebug) {
         std::cout << "set pointyS" << std::endl;
         std::cout << "entering loop" << std::endl;
@@ -122,9 +131,9 @@ std::string substring(const std::string s, const int start, const int end) {
     for(int i = start; i < loopcount; i++) {
         if(CHPatterns_LOG_LEVEL >= CHPatternsLogLevelDebug) {
             std::cout << "in loop" << std::endl;
-            std::cout << "setting nextChar to index" << (i+"") << std::endl;
+            std::cout << "setting nextChar to index" << i << std::endl;
         }
-        const std::string nextChar = pointyS[i];
+        const string nextChar = pointyS[i];
         if(CHPatterns_LOG_LEVEL >= CHPatternsLogLevelDebug) {
             std::cout << "set nextChar" << std::endl;
         }
@@ -136,26 +145,29 @@ std::string substring(const std::string s, const int start, const int end) {
     return result;
 }
 
-// std::string join(const std::string arr[]*) {
-//     std::string result = "";
+// string join(const string arr[]*) {
+//     string result = "";
 //     for(uint i = 0; i < arr->length; i++) {
 //         result += arr[i];
 //     }
 //     return result;
 // }
-std::string join(const std::vector<std::string> vec) {
-    std::string result = "";
+string join(const vector<string> vec, const string &sep = ",") {
+    string result = "";
     for(int i = 0; i < vec.size(); i++) {
         result += vec[i];
+        if((i+1) < vec.size()) {
+            result += sep;
+        }
     }
     return result;
 }
-std::string u8ToString(u8 n) {
+string u8ToString(u8 n) {
     // int iN = ((int)n);
     // return ("" + iN);
     return std::to_string((unsigned)n);
 }
-u8 parseU8(const std::string s) {
+u8 parseU8(const string s) {
     if(CHPatterns_LOG_LEVEL >= CHPatternsLogLevelDebug) {
         std::cout << "-- begin parseU8 debug logging --" << std::endl;
         std::cout << "s: \"" << s << "\"" << std::endl;
@@ -178,14 +190,14 @@ u8 parseU8(const std::string s) {
                 string stringedIThingyToAdd = u8ToString(iThingyToAdd);
                 std::cout << "digit #" << ((int)i) << ": " << digit << std::endl;
                 std::cout << "  as u8: " << stringedParsed << std::endl;
-                std::cout << "  zerocount: " << zerocount << std::endl;
-                std::cout << "  powedZerocount: " << powedZerocount << std::endl;
+                std::cout << "  zerocount: " << str(zerocount) << std::endl;
+                std::cout << "  powedZerocount: " << str(powedZerocount) << std::endl;
                 std::cout << "  thingyToAdd: " << stringedThingyToAdd << std::endl;
                 std::cout << "  iThingyToAdd: " << stringedIThingyToAdd << std::endl;
             }
-            std::string stringedPreviousResult = u8ToString(result);
+            string stringedPreviousResult = u8ToString(result);
             result += thingyToAdd;
-            std::string stringedResult = u8ToString(result);
+            string stringedResult = u8ToString(result);
             if(CHPatterns_LOG_LEVEL >= CHPatternsLogLevelDebug) {
                 std::cout << "  updated result from \"" << stringedPreviousResult << "\" to \"" << stringedResult << "\"" << std::endl;
             }
@@ -196,9 +208,12 @@ u8 parseU8(const std::string s) {
     }
     return result;
 }
-bool containsKey(std::map<string, string> map, string key) {
+bool containsKey(map<string, string> map, string key) {
     if (map.count(key) > 0) {
         return true;
     }
     return false;
+}
+void logStrings(vector<string> arg, const string &sep = ",", const string &pfx = "[", const string &sfx = "]") {
+    std::cout << pfx << join(arg, sep) << sfx << std::endl;
 }
